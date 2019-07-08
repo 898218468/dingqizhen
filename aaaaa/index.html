@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+ <head>
+      <title >新闻部分</title>
+      <meta charset="utf-8">
+    <style type="text/css" media="screen">
+      #show{
+        width:300px;
+        height:200px;
+        overflow:hidden;
+        position: relative;
+      }
+      #cont{
+        width:1200px;
+        height:200px;
+
+      }
+            #cont img{
+        width:300px;
+        height:200px;
+
+      }
+      #nav{
+        width: 300px;
+        height:200px;
+        position: relative;
+      }
+  ul{
+   list-style-type:none;
+
+ padding: 0;
+ margin: 0;
+ position: absolute;
+ bottom:30px;
+ left:100px;
+
+    }
+    ul li{
+      margin-right:20px;
+      float: left;
+       width:10px;
+      height:10px;
+      background: #fff;
+    }
+    .aa{
+      background: #000;
+    }
+
+    .right{
+      position: absolute;
+      top:10px;
+      left:400px;
+      width: 500px;
+      height: 200px;
+      
+    }
+
+
+    #xw{
+      font-size: 12px;
+    }
+        #xw li{
+          width: 500px;
+          height: 20px;
+      font-size: 12px;
+      margin-bottom:10px;
+      margin-left:-80px;
+    }
+    </style>
+  
+    
+ </head>
+<body>
+ 
+   <div id="nav">
+
+     <div id="show">
+        <div id="cont">
+      
+        </div>   
+     </div>
+      <ul id="jd">
+        <li class="aa"></li>
+         <li></li>
+          <li></li>
+          <li></li>
+      </ul>
+   </div>
+
+<div class="right">
+    <ul id="xw">
+     
+    </ul>
+
+
+</div>
+
+
+</body>
+
+<script>
+   var i=0;
+   function lbt(){
+     document.getElementById("show").scrollLeft+=10;
+     if(document.getElementById("show").scrollLeft>=600){
+         document.getElementById("cont").appendChild(document.getElementById("cont").children[0]);
+          document.getElementById("show").scrollLeft=0;
+          clearInterval(x);
+ 
+          setTimeout(start,1000);
+
+     }
+   }
+      function start(){ 
+    
+        if(i==3){
+          i=0;
+    
+           document.getElementById("jd").children[3].removeAttribute("class");
+        
+        }else{
+          i++;
+         
+         
+          document.getElementById("jd").children[i-1].removeAttribute("class"); 
+        }
+     document.getElementById("jd").children[i].className="aa";
+       x=setInterval("lbt()",80);
+ } 
+   
+      setTimeout(start,1000);
+
+
+   var xml=new XMLHttpRequest;
+      xml.open("post","http://www.qhdlink-student.top/student/banner.php");
+      xml.setRequestHeader("content-type","application/X-WWW-form-urlencoded");
+      var s_data="username=zyp&userpwd=123456&userclass=50&type=4";
+      xml.onreadystatechange=function(){
+          if(xml.readyState==4 && xml.status==200){
+              var r_data=JSON.parse(xml.responseText);
+            for(i in r_data){
+                var lunb=r_data[i].path_banner;               
+                console.log(r_data[i].path_banner);
+                document.getElementById("cont").innerHTML+='<img src="http://www.qhdlink-student.top/'+lunb+'">'
+            }
+          }
+          
+      }
+      xml.send(s_data);
+
+
+ var journa;
+ journa=new XMLHttpRequest();
+ journa.open("post","http://www.qhdlink-student.top/student/newsa.php");
+ var s1_data="username=zyp&userpwd=123456&userclass=50&type=4";
+ journa.setRequestHeader("content-type","application/X-WWW-form-urlencoded");
+ journa.onreadystatechange=function(){
+     if(journa.readyState==4 && journa.status==200){
+          var hy=JSON.parse(journa.responseText);
+          console.log(hy)
+           for(y in hy){
+              var tit=hy[i].title_news;
+                var tim=hy[i].time_news;
+                var m=hy[i].id_news;
+                document.getElementById("xw").innerHTML+="<li><a href='新闻内容.html?id="+m+"'>"+tit+tim+"</a></li>"
+           }
+     }
+
+ }
+
+journa.send(s1_data);
+
+
+
+</script>
+
+
+     
+
+</html>

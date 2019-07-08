@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>新闻内容</title>
+  <meta charset="uft-8">
+</head>
+<body>
+  <div id="coot"></div>
+</body>
+</html>
+<script>
+    var x=location.search.slice(4);
+    var cont;
+    cont=new XMLHttpRequest();
+    cont.open("post","http://www.qhdlink-student.top/student/newsinfo.php");
+    cont.setRequestHeader("content-type","application/X-WWW-form-urlencoded");
+  var s3_data="username=zyp&userpwd=123456&userclass=50&type=4&m="+x;
+   cont.onreadystatechange=function(){
+          if(cont.readyState==4 && cont.status==200){
+              var cont_data=JSON.parse(cont.responseText);
+              document.getElementById("coot").innerHTML=cont_data[0].info_news;
+              
+          }
+          
+      }
+      cont.send(s3_data);
+
+
+</script>

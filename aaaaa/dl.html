@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>登录界面</title>
+	<meta charset="utf-8">
+	<style type="text/css" media="screen">
+		body{background: #eee;}
+		.conten{width:500px;height:300px;background: #fff;margin: 200px auto;padding-top:10px;}
+
+        p{
+        	width: 400px;
+        
+        	margin: 30px auto;
+        	margin-bottom:30px;
+        	margin-top:30px; 
+        }
+        p>button{
+        	width: 100px;
+        	height: 40px;
+        	margin-left:150px; 
+        }
+        p>label{
+        	display: inline-block;
+        	width: 100px;
+        	text-align: right;
+        	margin-right:20px;
+        	font-size: 24px;
+        }
+          p>input{width:220px;
+           height: 30px;
+          border:1px solid #000;
+          padding-left:20px;
+        }
+
+       #tishi{
+       	width: 500px;
+       	text-align: center;
+       	  color:red;
+       	  font-size: 12px;
+       }
+
+	</style>
+</head>
+<body>
+
+
+
+  <div class="conten">
+  	 <p><label>用户名:</label><input id="use"type="text"placeholder="请输入用户名"></p>
+  	 <p><label>密码：</label><input type="password"id="usepass"placeholder="请输入密码"></p>
+  	 <p><button id="butn">登录</button></p>
+    <div id="tishi"></div>
+  </div>
+
+</body>
+
+</html>
+<script>
+document.getElementById("butn").onclick=function(){
+	var xml;
+	xml=new XMLHttpRequest();
+    xml.open("post","http://www.qhdlink-student.top/student/login.php");
+    xml.setRequestHeader("content-type","application/x-www-form-urlencoded");
+    var use=document.getElementById("use").value;
+    var usepass=document.getElementById("usepass").value;
+    var data="username="+use+"&userpwd="+usepass+"&userclass=52&type=4";
+    xml.onreadystatechange=function(){
+    	if(xml.readyState==4 && xml.status==200){
+             var newdata=xml.responseText;
+             console.log(newdata)
+             if(newdata=="no"){
+             	document.getElementById("tishi").innerHTML="*用户名或密码错误";
+             }else{
+
+             	location.href="index.html";
+             }
+           
+             	
+             
+
+  
+     }
+    }
+if(document.getElementById("usepass").value!=""){
+	xml.send(data);
+}else{
+	
+document.getElementById("tishi").innerHTML="*密码不能为空";
+}
+
+    
+    }
+
+    
+ 
+</script>
